@@ -69,3 +69,39 @@ CREATE TABLE reservations (
     status VARCHAR(20) NOT NULL DEFAULT 'pending',
     CONSTRAINT FK_reservations_users FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+INSERT INTO menu_items (name, description, price, category)
+VALUES ('Classic Burger', 'Beef patty with chedder', 14.99, 'Mains');
+
+INSERT INTO menu_items (name, description, price, category)
+VALUES ('French Fries', 'Crispy golden fries', 4.50, 'Sides');
+
+INSERT INTO menu_items (name, description, price, category)
+VALUES('Chocolate Cake', 'Rich cake with fudge icing', 6.99, 'Desserts');
+
+INSERT INTO menu_items (name, description, price, category)
+VALUES('Eba and Egusi soup', 'Traditional Nigerian dish', 12.99, 'Mains');
+
+INSERT INTO users (name, email, password_hash, role)
+VALUES ('Admin User', 'admin@example.com', '$2b$10$GwsOSMLxIP/e3nNWaqDh3e7WYravb5Kucu6v9NnWXi3vYNKujQtfm', 'admin');
+
+INSERT INTO users (name, email, password_hash, role)
+VALUES ('Jane Customer', 'jane@example.com', '$2b$10$GwsOSMLxIP/e3nNWaqDh3e7WYravb5Kucu6v9NnWXi3vYNKujQtfm', 'customer');
+
+INSERT INTO events (title, description, event_date, capacity, available_seats)
+VALUES ('Jazz Night', 'Live music and a special dinner menu', '2026-12-31 19:00', 50, 50);
+
+INSERT INTO reservations (user_id, date, time, party_size)
+VALUES (2, '2026-12-05', '19:00', 4);
+
+INSERT INTO reservations (user_id, date, time, party_size)
+VALUES (2, '2026-12-10', '18:30', 2);
+
+INSERT INTO orders (user_id, total_price)
+VALUES(2, 23.99);
+
+INSERT INTO order_items (order_id, menu_item_id, quantity, price_each)
+VALUES(1, 1, 1, 14.99);
+
+INSERT INTO order_items (order_id, menu_item_id, quantity, price_each)
+VALUES(1, 2, 2, 4.50);

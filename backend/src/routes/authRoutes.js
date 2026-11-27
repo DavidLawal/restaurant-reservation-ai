@@ -2,11 +2,25 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sql, getPool } from "../config/db.js";
+import { z } from "zod";
+import { validate } from "../middleware/validate.js";
+
 
 const router = express.Router();
 
+const registerSchema = z.object({
+  name: z.string({ error: "Name is required" }).trim().min(1, "Name is reqiured").max(100, "Name must be 100 characters or less"),
+  email: z.email("Please enter a valid email").max(100, "Email must be 100 characters or less"),
+  password: z.string({ error: "Password is required" }).min(8, "Password must be at least 8 characters"),
+});
 
-router.post("/register", async (req, res) => {
+const loginSchema = z.object({
+  email: z.email("Please enter a valid email"),
+  password: z.string({ error: "Password is required" }).min(1, "Password is required"),
+});
+
+
+router.post("/register", validate(registerSchema), async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -41,7 +55,7 @@ router.post("/register", async (req, res) => {
 });
 
 
-router.post("/login", async (req, res) => {
+router.post("/login", validate(loginSchema), async (req, res) => {
   const { email, password } = req.body;
 
   try {
